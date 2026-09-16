@@ -1,0 +1,41 @@
+version: 1
+name: vtuber-research-loop
+purpose: evidence-backed-vtuber-research
+seed:
+  name: 旗姫
+  type: community
+
+loop:
+  - id: seed
+    input: seed/
+    output: research-seeds/
+  - id: source
+    input: research-seeds/
+    output: evidence/sources.jsonl
+  - id: observation
+    input: evidence/sources.jsonl
+    output: evidence/observations.jsonl
+  - id: entity
+    input: evidence/observations.jsonl
+    output: data/entities.jsonl
+  - id: relation
+    input: data/entities.jsonl
+    output: data/relations.jsonl
+  - id: view
+    input:
+      - data/entities.jsonl
+      - data/relations.jsonl
+    output: docs/dashboard.html
+  - id: question
+    input:
+      - evidence/observations.jsonl
+      - data/relations.jsonl
+    output: research/next-question.md
+
+principles:
+  - seed-first
+  - provenance-preserved
+  - fact-inference-hypothesis-separated
+  - no-name-only-entity-merge
+  - reproducible-run
+  - next-question-generated
